@@ -1,11 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace HighchartsTest
 {
@@ -20,16 +17,18 @@ namespace HighchartsTest
             HighchartsPage chartsPage = new HighchartsPage(driver);
             chartsPage.GoToPage();
             chartsPage.TurnOffChart();
+            chartsPage.HoverToCharts();
+            chartsPage.HideFlags();
 
             IList<IWebElement> googleChart = chartsPage.GetGoogleChart();
             List<string> result = new List<string>();
             foreach (IWebElement i in googleChart)
             {
                 chartsPage.HoverTo(i);
-                //var toolTipText = chartsPage.GetTooltipText();
-                //result.Add(toolTipText);
+                var toolTipText = chartsPage.GetTooltipText();
+                result.Add(toolTipText);
             }
-
+            //TODO: Assert
             driver.Close();
             
         }

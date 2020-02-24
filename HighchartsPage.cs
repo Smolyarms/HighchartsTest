@@ -30,13 +30,18 @@ namespace HighchartsTest
         private IWebElement tooltip;
 
         [FindsBy(How = How.CssSelector, Using = "button[aria-label = 'Toggle visibility of Google search for highcharts']")]
-        public IWebElement buttonGoogleChart;
+        private IWebElement buttonGoogleChart;
 
         [FindsBy(How = How.CssSelector, Using = "button[aria-label = 'Toggle visibility of Revenue']")]
-        public IWebElement buttonRevenueChart;
+        private IWebElement buttonRevenueChart;
 
         [FindsBy(How = How.CssSelector, Using = "button[aria-label = 'Toggle visibility of Highsoft employees']")]
-        public IWebElement buttonEmployeesChart;
+        private IWebElement buttonEmployeesChart;
+
+        [FindsBy(How = How.CssSelector, Using = "g.highcharts-plot-bands-0")]
+        private IWebElement chartsArea;
+        [FindsBy(How =How.CssSelector, Using = ".highcharts-flags-series.highcharts-tracker ")]
+        private IList<IWebElement> flags;
 
         public HighchartsPage GoToPage()
         {
@@ -84,7 +89,18 @@ namespace HighchartsTest
             //String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover',true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
             //js.ExecuteScript(mouseOverScript, element);
         }    
-
-
+        
+        public void HoverToCharts()
+        {
+            HoverTo(chartsArea);
+        }
+        //((JavascriptExecutor) driver).executeScript("arguments[0].style.visibility='hidden'", element);
+        public void HideFlags()
+        {
+            foreach (IWebElement i  in flags)
+            {
+                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].style.visibility='hidden'", i);
+            }
+        }
     }
 }
