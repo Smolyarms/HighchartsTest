@@ -7,30 +7,63 @@ using System.Collections.Generic;
 namespace HighchartsTest
 {
     [TestClass]
-    public class UnitTest1
+    public class Charts_Test
     {
-        [TestMethod]
-        public void TestMethod1()
+        private static IWebDriver driver;
+        
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext context)
         {
-            IWebDriver driver = new ChromeDriver(Environment.CurrentDirectory);
-                        
+            driver = new ChromeDriver(Environment.CurrentDirectory);
             HighchartsPage chartsPage = new HighchartsPage(driver);
             chartsPage.GoToPage();
-            chartsPage.TurnOffChart();
-            chartsPage.HoverToCharts();
+            chartsPage.HoverToChartsArea();
             chartsPage.HideFlags();
+        }
 
-            IList<IWebElement> googleChart = chartsPage.GetGoogleChart();
+        [ClassCleanup]
+        public static void ClassCleanup()
+        {
+            driver.Close();
+        }
+        [TestMethod]
+        public void GoogleChartTest()
+        {
+            HighchartsPage chartsPage = new HighchartsPage(driver);
+            IList<IWebElement> currentChart = chartsPage.GetGoogleChart();
             List<string> result = new List<string>();
-            foreach (IWebElement i in googleChart)
+            foreach (IWebElement i in currentChart)
             {
-                chartsPage.HoverTo(i);
-                var toolTipText = chartsPage.GetTooltipText();
+                string toolTipText = chartsPage.GetTooltipText(i);
                 result.Add(toolTipText);
             }
             //TODO: Assert
-            driver.Close();
-            
+        }
+        [TestMethod]
+        public void RevenueChartTest()
+        {
+            HighchartsPage chartsPage = new HighchartsPage(driver);
+            IList<IWebElement> currentChart = chartsPage.GetRevenueChart();
+            List<string> result = new List<string>();
+            foreach (IWebElement i in currentChart)
+            {
+                string toolTipText = chartsPage.GetTooltipText(i);
+                result.Add(toolTipText);
+            }
+            //TODO: Assert
+        }
+        [TestMethod]
+        public void EmployeesChartTest()
+        {
+            HighchartsPage chartsPage = new HighchartsPage(driver);
+            IList<IWebElement> currentChart = chartsPage.GetEmployeesChart();
+            List<string> result = new List<string>();
+            foreach (IWebElement i in currentChart)
+            {
+                string toolTipText = chartsPage.GetTooltipText(i);
+                result.Add(toolTipText);
+            }
+            //TODO: Assert
         }
     }
 }

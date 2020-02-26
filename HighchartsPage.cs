@@ -14,7 +14,7 @@ namespace HighchartsTest
         public HighchartsPage(IWebDriver driver)
         {
             this.driver = driver;
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             PageFactory.InitElements(driver, this);
         }
         [FindsBy(How = How.CssSelector, Using = "path.highcharts-point.highcharts-color-0")]
@@ -23,7 +23,7 @@ namespace HighchartsTest
         [FindsBy(How = How.CssSelector, Using = "path.highcharts-point.highcharts-color-1")]
         private IList<IWebElement> revenueChart;
 
-        [FindsBy(How = How.CssSelector, Using = "path.highcharts-point.highcharts-color-1")]
+        [FindsBy(How = How.CssSelector, Using = "path.highcharts-point.highcharts-color-2")]
         private IList<IWebElement> employeesChart;
 
         [FindsBy(How = How.CssSelector, Using = "g.highcharts-tooltip")]
@@ -40,6 +40,7 @@ namespace HighchartsTest
 
         [FindsBy(How = How.CssSelector, Using = "g.highcharts-plot-bands-0")]
         private IWebElement chartsArea;
+
         [FindsBy(How =How.CssSelector, Using = ".highcharts-flags-series.highcharts-tracker ")]
         private IList<IWebElement> flags;
 
@@ -53,16 +54,21 @@ namespace HighchartsTest
         {
             return googleChart;
         }
-        public IList<IWebElement> GetRvenueChart()
+        public IList<IWebElement> GetRevenueChart()
         {
             return revenueChart;
         }
-
-        public string GetTooltipText()
+        public IList<IWebElement> GetEmployeesChart()
+        {
+            return employeesChart;
+        }
+        
+        public string GetTooltipText(IWebElement element)
         {
             //TODO: Add waiter of tooltip
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.CssSelector("g.highcharts-tooltip")));
+            HoverTo(element);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
+            wait.Until(driver => tooltip.Displayed);
             return tooltip.Text;
         }
 
@@ -75,12 +81,11 @@ namespace HighchartsTest
         //    }
         //}
 
-        public void TurnOffChart()
-        {
-            buttonEmployeesChart.Click();
-            buttonRevenueChart.Click();
-        }
-
+        //public void TurnOffChart()
+        //{
+        //    buttonEmployeesChart.Click();
+        //    buttonRevenueChart.Click();
+        //}
         public void HoverTo(IWebElement element)
         {
             Actions action = new Actions(driver);
@@ -89,12 +94,10 @@ namespace HighchartsTest
             //String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover',true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
             //js.ExecuteScript(mouseOverScript, element);
         }    
-        
-        public void HoverToCharts()
+        public void HoverToChartsArea()
         {
             HoverTo(chartsArea);
         }
-        //((JavascriptExecutor) driver).executeScript("arguments[0].style.visibility='hidden'", element);
         public void HideFlags()
         {
             foreach (IWebElement i  in flags)
