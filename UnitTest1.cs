@@ -65,5 +65,28 @@ namespace HighchartsTest
             }
             //TODO: Assert
         }
+       
+    }
+
+    [TestClass]
+    public class MapCharts_Test
+    {
+        [TestMethod]
+        public void MapChartTest()
+        {
+            IWebDriver driver = new ChromeDriver(Environment.CurrentDirectory);
+            HighMapsPage mapPage = new HighMapsPage(driver);
+            mapPage.GoToPage();
+            mapPage.HoverToChartsArea();
+            IList<IWebElement> currentChart = mapPage.GetMapChart();
+            List<string> result = new List<string>();
+            foreach (IWebElement i in currentChart)
+            {
+                string toolTipText = mapPage.GetTooltipText(i);
+                result.Add(toolTipText);
+            }
+            //TODO: Assert
+            driver.Close();
+        }
     }
 }
