@@ -3,6 +3,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace HighchartsTest
 {
@@ -31,41 +33,44 @@ namespace HighchartsTest
         {
             HighchartsPage chartsPage = new HighchartsPage(driver);
             IList<IWebElement> currentChart = chartsPage.GetGoogleChart();
-            List<string> result = new List<string>();
+            List<string> actualResult = new List<string>();
             foreach (IWebElement i in currentChart)
             {
                 string toolTipText = chartsPage.GetTooltipText(i);
-                result.Add(toolTipText);
+                actualResult.Add(toolTipText);
             }
-            //TODO: Assert
+            List<string> expected = File.ReadAllLines("GoogleChart.txt").ToList();
+            CollectionAssert.AreEqual(expected, actualResult);
         }
         [TestMethod]
         public void RevenueChartTest()
         {
             HighchartsPage chartsPage = new HighchartsPage(driver);
             IList<IWebElement> currentChart = chartsPage.GetRevenueChart();
-            List<string> result = new List<string>();
+            List<string> actualResult = new List<string>();
             foreach (IWebElement i in currentChart)
             {
                 string toolTipText = chartsPage.GetTooltipText(i);
-                result.Add(toolTipText);
+                actualResult.Add(toolTipText);
             }
-            //TODO: Assert
+            List<string> expected = File.ReadAllLines("RevenueChart.txt").ToList();
+            CollectionAssert.AreEqual(expected, actualResult);
         }
         [TestMethod]
         public void EmployeesChartTest()
         {
             HighchartsPage chartsPage = new HighchartsPage(driver);
             IList<IWebElement> currentChart = chartsPage.GetEmployeesChart();
-            List<string> result = new List<string>();
+            List<string> actualResult = new List<string>();
             foreach (IWebElement i in currentChart)
             {
                 string toolTipText = chartsPage.GetTooltipText(i);
-                result.Add(toolTipText);
+                actualResult.Add(toolTipText);
             }
-            //TODO: Assert
+            List<string> expected = File.ReadAllLines("EmployeesChart.txt").ToList();
+            CollectionAssert.AreEqual(expected, actualResult);
+            //TODO:Check employees pattern
         }
-       
     }
 
     [TestClass]
@@ -78,14 +83,16 @@ namespace HighchartsTest
             HighMapsPage mapPage = new HighMapsPage(driver);
             mapPage.GoToPage();
             mapPage.HoverToChartsArea();
+            
             IList<IWebElement> currentChart = mapPage.GetMapChart();
-            List<string> result = new List<string>();
+            List<string> actualResult = new List<string>();
             foreach (IWebElement i in currentChart)
             {
                 string toolTipText = mapPage.GetTooltipText(i);
-                result.Add(toolTipText);
+                actualResult.Add(toolTipText);
             }
-            //TODO: Assert
+            List<string> expected = File.ReadAllLines("MapUkraine.txt").ToList();
+            CollectionAssert.AreEqual(expected, actualResult);
             driver.Close();
         }
     }

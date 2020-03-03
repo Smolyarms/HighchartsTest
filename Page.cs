@@ -14,10 +14,7 @@ namespace HighchartsTest
         }
         protected IWebDriver driver;
         public abstract string url { get; }
-        public void GoToPage()
-        {
-            driver.Navigate().GoToUrl(this.url);
-        }
+        public abstract void GoToPage();
         
 
     }

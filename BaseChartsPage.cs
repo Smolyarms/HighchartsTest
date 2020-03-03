@@ -8,6 +8,7 @@ namespace HighchartsTest
 {
     abstract class BaseChartsPage : Page
     {
+        //TODO:File.WriteAllLines("GoogleChartTest.txt", result.Select(x => string.Join(",", x)));
         [FindsBy(How = How.CssSelector, Using = "g.highcharts-tooltip")]
         protected IWebElement tooltip;
         [FindsBy(How = How.CssSelector, Using = "div.sidebar-eq.demo")]
@@ -23,14 +24,42 @@ namespace HighchartsTest
         public string GetTooltipText(IWebElement element)
         {
             HoverTo(element);
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
-            wait.Until(driver => tooltip.Displayed);
             return tooltip.Text;
+            //if (IsElementPresent(tooltip))
+            //{
+            //    return tooltip.Text;
+            //}
+            //else
+            //{
+            //    HoverTo(element);
+            //    return tooltip.Text;
+            //}
         }
         public void HoverToChartsArea()
         {
             HoverTo(chartsArea);
         }
+        public override void GoToPage()
+        {
+            driver.Navigate().GoToUrl(url);
+        }
 
+        //private bool IsElementPresent(IWebElement element)
+        //{
+        //    try
+        //    {
+        //        if (element.Displayed)
+        //        {
+        //        }
+        //        return true;
+        //    }
+        //    catch (NoSuchElementException)
+        //    {
+        //        return false;
+        //    }
+        //}
+
+
+        
     }
 }
