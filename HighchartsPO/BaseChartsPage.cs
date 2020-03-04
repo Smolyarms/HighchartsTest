@@ -4,7 +4,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.PageObjects;
 using System;
 
-namespace HighchartsTest
+namespace HWTAProj
 {
     abstract class BaseChartsPage : Page
     {
@@ -41,7 +41,7 @@ namespace HighchartsTest
         }
         public override void GoToPage()
         {
-            driver.Navigate().GoToUrl(url);
+            driver.Navigate().GoToUrl(Url);
         }
 
         //private bool IsElementPresent(IWebElement element)

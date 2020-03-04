@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace HighchartsTest
+namespace HWTAProj
 {
     [TestClass]
     public class Charts_Test

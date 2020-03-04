@@ -2,11 +2,11 @@
 using SeleniumExtras.PageObjects;
 using System.Collections.Generic;
 
-namespace HighchartsTest
+namespace HWTAProj
 {
     class HighchartsPage : BaseChartsPage
     {
-        public override string url => "https://www.highcharts.com/demo/combo-timeline";
+        public override string Url => "https://www.highcharts.com/demo/combo-timeline";
         public HighchartsPage(IWebDriver driver) : base(driver)
         {
         }

@@ -2,7 +2,7 @@
 using SeleniumExtras.PageObjects;
 using System;
 
-namespace HighchartsTest
+namespace HWTAProj
 {
     abstract class Page
     {
@@ -13,7 +13,7 @@ namespace HighchartsTest
             PageFactory.InitElements(driver, this);
         }
         protected IWebDriver driver;
-        public abstract string url { get; }
+        public abstract string Url { get; }
         public abstract void GoToPage();
         
 
